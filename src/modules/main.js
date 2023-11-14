@@ -1,3 +1,4 @@
+import { get } from '@/api';
 import axios from 'axios';
 import { ref } from 'vue';
 
@@ -7,11 +8,7 @@ export const comments = ref([]);
 
 export function fetchData() {
   axios
-    .all([
-      axios.get('https://jsonplaceholder.typicode.com/posts'),
-      axios.get('https://jsonplaceholder.typicode.com/users'),
-      axios.get('https://jsonplaceholder.typicode.com/comments'),
-    ])
+    .all([get('/posts'), get('/users'), get('/comments')])
     .then(
       axios.spread((postsRes, usersRes, commentsRes) => {
         posts.value = postsRes.data;
@@ -25,7 +22,7 @@ export function fetchData() {
 }
 
 export function getPosts(id) {
-  posts.value = posts.value.filter((post) => post.userId === id);
+  return posts.value.filter((post) => post.userId === id);
 }
 
 export function getUser(userId) {

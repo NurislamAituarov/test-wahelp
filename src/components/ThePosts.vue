@@ -1,55 +1,42 @@
 <template>
-  <div class="container">
+  <div v-if="posts.length" class="container">
     <h2 class="username" v-if="userId">
       Посты пользователя: {{ getUserName }}
 
-      <button @click="setTab('posts', null)" class="btn">X</button>
+      <button @click="setTab('posts', 'reset')" class="btn">X</button>
     </h2>
 
     <ul class="posts">
       <post-item
         v-for="(post, ind) of showPosts"
         :key="post.id"
-        :post="post"
+        :post-item="post"
         :index="ind"
       />
     </ul>
-
-    <div ref="infinitiesScrollTrigger"></div>
   </div>
+
+  <p class="loading" v-else>Loading...</p>
+  <div ref="infinitiesScrollTrigger"></div>
 </template>
 
 <script setup>
-import {
-  computed,
-  onMounted,
-  ref,
-  watchEffect,
-  defineProps,
-  inject,
-} from "vue";
-import { fetchData, posts, getPosts, users } from "@/modules/main";
+import { computed, onMounted, ref, defineProps, inject } from "vue";
+import { posts, getPosts, users } from "@/modules/main";
 import PostItem from "./PostItem.vue";
-
 const props = defineProps({
   userId: Number,
 });
 const amountPosts = ref(20);
-
 const setTab = inject(["set-tab"]);
-
 onMounted(() => {
-  fetchData();
   scrollTrigger();
 });
 
-watchEffect(() => {
-  if (props.userId) {
-    getPosts(props.userId);
-  }
-});
-
 const showPosts = computed(() => {
+  if (props.userId) {
+    return getPosts(props.userId);
+  }
   return posts.value.filter((post, ind) => ind < amountPosts.value);
 });
 
@@ -67,7 +54,8 @@ function scrollTrigger() {
       }
     });
   });
-  observer.observe(infinitiesScrollTrigger.value);
+  infinitiesScrollTrigger.value &&
+    observer.observe(infinitiesScrollTrigger.value);
 }
 </script>
 
@@ -103,5 +91,10 @@ function scrollTrigger() {
       opacity: 0.8;
     }
   }
+}
+
+.loading {
+  text-align: center;
+  margin: 50px 0;
 }
 </style>

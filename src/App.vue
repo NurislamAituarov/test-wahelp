@@ -1,17 +1,25 @@
 <template>
   <main class="main">
     <the-tabs @set-tab="setTab" :active-tab="activeTab" />
-    <component :is="routes[activeTab]" :user-id="userId"> </component>
+
+    <keep-alive>
+      <component :is="routes[activeTab]" :user-id="userId"> </component>
+    </keep-alive>
   </main>
 </template>
 
 <script setup>
-import { provide, ref } from "vue";
+import { onMounted, provide, ref } from "vue";
 import ThePosts from "./components/ThePosts.vue";
 import TheUsers from "./components/TheUsers.vue";
 import TheTabs from "./components/TheTabs.vue";
 import { fetchData } from "./modules/main";
+
 const activeTab = ref("posts");
+
+onMounted(() => {
+  fetchData();
+});
 
 const routes = {
   posts: ThePosts,
@@ -22,7 +30,10 @@ const userId = ref(null);
 function setTab(tab, id) {
   activeTab.value = tab;
   userId.value = +id;
-  if (!id) {
+  if (id === "reset" && tab === "posts") {
+    fetchData();
+  }
+  if (typeof id === "number") {
     fetchData();
   }
 }
