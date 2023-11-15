@@ -25,9 +25,28 @@ export function getPosts(id) {
   return posts.value.filter((post) => post.userId === id);
 }
 
+export function getComments(postId) {
+  return comments.value.filter((comment) => comment.postId === postId);
+}
 export function getUser(userId) {
   return users.value.find((user) => user.id === userId) || {};
 }
-export function getComments(postId) {
-  return comments.value.filter((comment) => comment.postId === postId);
+
+const originalOrder = ref([]);
+
+export function alphabeticalSortingPosts() {
+  originalOrder.value = [...posts.value];
+  posts.value.sort((a, b) => {
+    const nameA = getUser(a.userId).name.toLowerCase();
+    const nameB = getUser(b.userId).name.toLowerCase();
+
+    if (nameA < nameB) return -1;
+    if (nameA > nameB) return 1;
+
+    return 0;
+  });
+}
+
+export function revertSortingPosts() {
+  posts.value = [...originalOrder.value];
 }

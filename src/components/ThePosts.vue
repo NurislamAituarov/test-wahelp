@@ -6,6 +6,8 @@
       <button @click="setTab('posts', 'reset')" class="btn">&times;</button>
     </h2>
 
+    <sort-box :user-id="userId" />
+
     <ul class="posts">
       <post-item
         v-for="(post, ind) of showPosts"
@@ -24,6 +26,7 @@
 import { computed, onMounted, ref, defineProps, inject } from "vue";
 import { posts, getPosts, users } from "@/modules/main";
 import PostItem from "./PostItem.vue";
+import SortBox from "./SortBox.vue";
 
 const props = defineProps({
   userId: Number,
