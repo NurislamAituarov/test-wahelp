@@ -14,6 +14,7 @@ import ThePosts from "./components/ThePosts.vue";
 import TheUsers from "./components/TheUsers.vue";
 import TheTabs from "./components/TheTabs.vue";
 import { fetchData } from "./modules/main";
+import { tabs } from "./lib/constants";
 
 const activeTab = ref("posts");
 
@@ -30,7 +31,7 @@ const userId = ref(null);
 function setTab(tab, id) {
   activeTab.value = tab;
   userId.value = +id;
-  if (id === "reset" && tab === "posts") {
+  if (id === "reset" && tab === tabs.posts) {
     fetchData();
   }
   if (typeof id === "number") {

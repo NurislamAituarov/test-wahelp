@@ -2,26 +2,30 @@
   <div class="tabs">
     <tab-btn
       name="Посты"
-      @click="activeTab !== 'posts' && $emit('set-tab', 'posts')"
-      :class="{ 'active-tab': activeTab === 'posts' }"
+      @click="!isActiveTabPosts && $emit('set-tab', tabs.posts)"
+      :class="{ 'active-tab': isActiveTabPosts }"
     />
     <tab-btn
       name="Пользователи"
-      @click="$emit('set-tab', 'users')"
-      :class="{ 'active-tab': activeTab === 'users' }"
+      @click="$emit('set-tab', tabs.users)"
+      :class="{ 'active-tab': activeTab === tabs.users }"
     />
   </div>
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from "vue";
+import { defineProps, defineEmits, computed } from "vue";
 import TabBtn from "./TabBtn.vue";
+import { tabs } from "@/lib/constants";
 
-defineProps({
+const props = defineProps({
   activeTab: String,
 });
-
 defineEmits(["set-tab"]);
+
+const isActiveTabPosts = computed(() => {
+  return props.activeTab === tabs.posts;
+});
 </script>
 
 

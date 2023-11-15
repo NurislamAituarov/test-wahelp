@@ -1,9 +1,9 @@
 <template>
   <div v-if="posts.length" class="container">
     <h2 class="username" v-if="userId">
-      Посты пользователя: {{ getUserName }}
+      Посты пользователя: <span> {{ getUserName }}</span>
 
-      <button @click="setTab('posts', 'reset')" class="btn">X</button>
+      <button @click="setTab('posts', 'reset')" class="btn">&times;</button>
     </h2>
 
     <ul class="posts">
@@ -24,11 +24,14 @@
 import { computed, onMounted, ref, defineProps, inject } from "vue";
 import { posts, getPosts, users } from "@/modules/main";
 import PostItem from "./PostItem.vue";
+
 const props = defineProps({
   userId: Number,
 });
-const amountPosts = ref(20);
 const setTab = inject(["set-tab"]);
+
+const amountPosts = ref(20);
+
 onMounted(() => {
   scrollTrigger();
 });
@@ -45,6 +48,7 @@ const getUserName = computed(() => {
   return user.name;
 });
 
+// бесконечный скролл
 const infinitiesScrollTrigger = ref();
 function scrollTrigger() {
   const observer = new IntersectionObserver((entries) => {
@@ -80,13 +84,16 @@ function scrollTrigger() {
 .username {
   display: flex;
   align-items: center;
-  gap: 20px;
+  span {
+    font-weight: 500;
+    margin-left: 5px;
+  }
   .btn {
-    padding: 5px 10px;
+    padding: 0 5px;
     color: red;
-    border-radius: 4px;
     background-color: rgb(201, 201, 201);
-    transition: all 0.5s;
+    margin-left: 20px;
+    font-size: 22px;
     &:hover {
       opacity: 0.8;
     }

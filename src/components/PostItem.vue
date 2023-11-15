@@ -10,20 +10,20 @@
       </li>
     </ul>
 
-    <form
+    <form-create-comments
+      :modal-value="commentsValue"
+      :is-loading="isLoading"
+      @update:modal-value="(newValue) => (commentsValue = newValue)"
       @submit.prevent="commentsValue && addComment(post.id)"
-      class="form-comments"
-    >
-      <textarea v-model="commentsValue" type="text" placeholder="New comment" />
-      <button type="submit">Add</button>
-    </form>
+    />
   </li>
 </template>
 
 <script setup>
+import { computed, ref } from "vue";
 import { post } from "@/api";
 import { getComments, getUser, defineProps } from "@/modules/main";
-import { computed, ref } from "vue";
+import FormCreateComments from "./FormCreateComments.vue";
 
 const props = defineProps({
   postItem: Object,
@@ -32,6 +32,7 @@ const props = defineProps({
 
 const commentsValue = ref();
 const createdDataComments = ref([]);
+const isLoading = ref(false);
 
 const allComments = computed(() => {
   const comments = getComments(props.postItem.id);
@@ -42,6 +43,7 @@ const allComments = computed(() => {
 });
 
 function addComment(postId) {
+  isLoading.value = true;
   post("/comments", {
     postId,
     name: "Name",
@@ -59,25 +61,8 @@ function addComment(postId) {
     })
     .finally(() => {
       commentsValue.value = "";
+      isLoading.value = false;
     });
 }
 </script>
 
-<style lang="scss" scoped>
-.form-comments {
-  margin-top: 10px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  textarea {
-    width: 50%;
-    max-width: 50%;
-    min-width: 275px;
-    max-height: 100px;
-    min-height: 50px;
-    padding: 5px 10px;
-    border: 1px solid gray;
-    border-radius: 4px;
-  }
-}
-</style>

@@ -17,7 +17,7 @@
           {{ user.phone }}
         </p>
 
-        <button @click="viewUsersPosts(user.id)" class="btn">
+        <button @click="viewUserPosts(user.id)" class="btn">
           Посмотреть посты пользователя
         </button>
       </li>
@@ -30,7 +30,7 @@ import { inject } from "vue";
 import { users } from "@/modules/main";
 const setTab = inject(["set-tab"]);
 
-function viewUsersPosts(id) {
+function viewUserPosts(id) {
   setTab("posts", id);
 }
 </script>
@@ -49,8 +49,7 @@ function viewUsersPosts(id) {
       margin-top: 10px;
       background-color: #d9d9d9;
       color: black;
-      border-radius: 4px;
-      transition: all 0.5s;
+      border: 1px solid gray;
       &:hover {
         opacity: 0.8;
       }

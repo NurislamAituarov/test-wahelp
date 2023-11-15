@@ -15,14 +15,9 @@ defineProps({
   outline: none;
   border: none;
   background-color: gray;
-  padding: 10px;
-  border-radius: 4px;
-  cursor: pointer;
-  color: rgb(255, 255, 255);
-  transition: all 0.5s;
-  &:hover {
-    background-color: rgb(164, 164, 164);
-  }
+  padding: 10px 20px;
+  color: rgb(0, 0, 0);
+  font-weight: bold;
 }
 .active-tab {
   background-color: black;
