@@ -28,6 +28,7 @@
 <script setup>
 import { inject } from "vue";
 import { users } from "@/modules/main";
+
 const setTab = inject(["set-tab"]);
 
 function viewUserPosts(id) {

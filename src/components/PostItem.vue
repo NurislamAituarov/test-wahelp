@@ -22,8 +22,8 @@
 <script setup>
 import { computed, ref } from "vue";
 import { post } from "@/api";
-import { getComments, getUser, defineProps } from "@/modules/main";
 import FormCreateComments from "./FormCreateComments.vue";
+import { getComments, getUser, defineProps } from "@/modules/main";
 
 const props = defineProps({
   postItem: Object,
