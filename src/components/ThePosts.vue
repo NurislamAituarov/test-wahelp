@@ -23,7 +23,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref, defineProps, inject } from "vue";
+import { computed, onMounted, ref, inject } from "vue";
 import { posts, getPosts, users } from "@/modules/main";
 import PostItem from "./PostItem.vue";
 import SortBox from "./SortBox.vue";

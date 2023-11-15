@@ -23,7 +23,7 @@
 import { computed, ref } from "vue";
 import { post } from "@/api";
 import FormCreateComments from "./FormCreateComments.vue";
-import { getComments, getUser, defineProps } from "@/modules/main";
+import { getComments, getUser } from "@/modules/main";
 
 const props = defineProps({
   postItem: Object,

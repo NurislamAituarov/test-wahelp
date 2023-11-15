@@ -13,8 +13,6 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from "vue";
-
 defineProps(["modalValue", "isLoading"]);
 defineEmits(["update:modalValue"]);
 </script>
