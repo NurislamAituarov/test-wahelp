@@ -31,6 +31,7 @@ const userId = ref(null);
 function setTab(tab, id) {
   activeTab.value = tab;
   userId.value = +id;
+
   if (id === "reset" && tab === tabs.posts) {
     fetchData();
   }

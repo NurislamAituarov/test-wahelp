@@ -2,7 +2,7 @@
   <form class="form-comments">
     <textarea
       type="text"
-      placeholder="напишите комментарий"
+      placeholder="напишите комментарии"
       :value="modalValue"
       @input="$emit('update:modalValue', $event.target.value)"
     />
